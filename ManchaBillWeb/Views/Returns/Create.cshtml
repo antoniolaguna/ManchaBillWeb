@@ -1,0 +1,399 @@
+﻿@model ManchaBillWeb.DTOs.ReturnDTO;
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<div class="container-fluid">
+    <div class="form-group" style="width:30%">
+        <label>Bill Number</label>
+        <div>
+            <input id="billNumber" onkeydown="search(this)" class="form-control" />
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="container-fluid">
+
+        <div class="card-body">
+            <h1 class="h3 mb-2 text-gray-800">Bill</h1>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableMiniSearch" width="100%" cellspacing="0" style="background-color:white">
+                    <thead>
+                        <tr>
+
+                            <th style="display:none;">
+                                ID
+                            </th>
+                            <th>
+                                Short Description
+                            </th>
+                            <th>
+                                Long Description
+                            </th>
+
+                            <th>
+                                Size
+                            </th>
+                            <th>
+                                Color
+                            </th>
+                            <th>
+                                Discount
+                            </th>
+                            <th>
+                                Units
+                            </th>
+                            <th>
+                                Prize
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                                Returs
+                            </th>
+                            <th style="display:none;">
+                                Prev. Returns
+                            </th>
+                            <th style="display:none;">
+                                ID MODEL
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+
+        <div class="card-body">
+            <h1 class="h3 mb-2 text-gray-800">Items</h1>
+            <div class="table-responsive">
+                <table runat="server" class="table table-bordered" id="dataTableMiniPreReturn" name="dataTableMiniPreBill" width="100%" cellspacing="0" style="background-color:white">
+                    <thead>
+                        <tr>
+
+                            <th style="display:none;">
+                                ID
+                            </th>
+
+                            <th>
+                                Short Description
+                            </th>
+                            <th>
+                                Long Description
+                            </th>
+
+                            <th>
+                                Size
+                            </th>
+                            <th>
+                                Color
+                            </th>
+                            <th>
+                                Discount
+                            </th>
+                            <th>
+                                Units
+                            </th>
+
+                            <th>
+                                Prize
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>
+
+                            </th>
+                            <th style="display:none;">
+                                ID MODEL
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+       
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Resume</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body" style="height:430px;" >
+                    <div class="chart-area">
+                        <div class="form-group" style="text-align:center">
+                            <label asp-for="Prize" id="prize" style="font-size:120px; color:green;">0</label>
+                            <label style="font-size:120px; color:green;">€</label>
+                        </div>
+                        <h1 class="h3 mb-2 text-gray-800">Details:</h1>
+                        <div>
+                            <label>Value: </label>
+                            <label asp-for="Value" id="value"></label>
+                            <label>€</label>
+                        </div>
+                        <div>
+                            <label>Tax: </label>
+                            <label asp-for="Tax" id="tax">21</label>
+                            <label>%</label>
+                        </div>
+                        <div>
+                            <label>Tax: </label>
+                            <label id="tax2"></label>
+                            <label>€</label>
+                        </div>
+                        
+
+
+                        <div>
+                            <input type="submit" value="Return" class="btn btn-primary" />
+                            <a asp-action="Cancel" class="btn btn-danger btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </span>
+                                <span class="text">Cancel</span>
+                            </a>
+                        </div>
+
+                            
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+
+<script>
+
+     function DeleteFromPreReturn  (ele) {
+         var existingRow=ele.parentNode.parentNode;
+         var idModel=existingRow.cells[10].innerText
+         var idBillLine=existingRow.cells[0].innerText
+          $.ajax({
+                url: '@Url.Action("DeleteToPreReturn","Returns")',
+                type: 'GET',
+                data: {
+                    idModel:idModel,
+                 },
+                success: function (data) {
+                    UpdatePreReturn(data);
+                    UpdateTemporalBill(idModel);
+                },
+                error: function () {
+                    console.log('error e json');
+                }
+               });
+     }
+
+      function UpdateTemporalBill  (idModel) {
+         var indexRow=GetBillLineIndex (idModel);
+         var existingRow = document.getElementById("dataTableMiniSearch").rows[indexRow];
+         var returns=parseFloat(existingRow.cells[10].innerText)-1;
+         existingRow.cells[10].innerText =returns;
+         
+     }
+
+     function GetBillLineIndex (idBillLine) {
+        var table_prebill = document.getElementById("dataTableMiniSearch");
+        for (var i = 0, row; row = table_prebill.rows[i]; i++) {
+          var idPreBill=row.cells[12].innerText;
+         
+          if(idBillLine==idPreBill){
+              return i;
+          }
+
+         }
+         return -1;
+    }
+
+     function UpdatePreReturn(data){
+            var tbodyRef = document.getElementById("dataTableMiniPreReturn").getElementsByTagName('tbody')[0];
+            $("#dataTableMiniPreReturn tbody tr").remove();
+                $(data).each(
+                    function (index, line) {
+                               var newRow = tbodyRef.insertRow();
+                               var idRow=tbodyRef.rows.length-1;
+                                // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                                var cell1 = newRow.insertCell(0);
+                                var cell2 = newRow.insertCell(1);
+                                var cell3 = newRow.insertCell(2);
+                                var cell4 = newRow.insertCell(3);
+                                var cell5 = newRow.insertCell(4);
+                                var cell6 = newRow.insertCell(5);
+                                var cell7 = newRow.insertCell(6);
+                                var cell8 = newRow.insertCell(7);
+                                var cell9 = newRow.insertCell(8);
+                                var cell10 = newRow.insertCell(9);
+                                var cell11 = newRow.insertCell(10);
+
+                                cell1.style="display:none";
+                                cell11.style="display:none";
+                                // Add some text to the new cells:
+                                 cell1.innerHTML = line.Id;
+                                cell2.innerHTML = line.Model.Item.ShortDescription;
+                                 cell3.innerHTML =line.Model.Item.LongDescription;
+                                 cell4.innerHTML =line.Model.Size.Description;
+                                 cell5.innerHTML =line.Model.Colour;
+                                 cell6.innerHTML =line.Discount;
+                                 cell7.innerHTML =line.Units;
+                                 cell8.innerHTML =line.UnitPrize;
+                                 cell9.innerHTML =line.Sum;
+                                 cell10.innerHTML=" <a class=\"btn btn-danger btn-icon-split\" onclick=\"DeleteFromPreReturn(this)\"><span class=\"icon text-white-50\"><i class=\"fa-solid fa-minus\" ></i></span></a> ";
+                                 cell11.innerHTML=line.ModelId;
+                }
+        )
+        CalculateTotal();
+        }
+
+        function CalculateTotal () {
+        var table_prebill = document.getElementById("dataTableMiniPreReturn");
+        var total=0;
+        for (var i = 1, row; row = table_prebill.rows[i]; i++) {
+          var totalProduct=row.cells[8].innerText;
+          total=parseFloat(total)+parseFloat(totalProduct);
+         }
+         var tax=parseFloat(parseFloat(total)*parseFloat(21/100)).toFixed(2);
+         var value=parseFloat(parseFloat(total)*parseFloat(79/100)).toFixed(2);
+         console.log("total:"+total);
+         $('#prize').text(total);
+         $('#value').text(value);
+         $('#tax2').text(tax);
+
+    }
+
+     function AddToPreReturn  (idRow) {
+         var idBillLine = document.getElementById("dataTableMiniSearch").rows[idRow+1].cells[0].innerText;
+         var units = document.getElementById("dataTableMiniSearch").rows[idRow+1].cells[6].innerText;
+         var returns = document.getElementById("dataTableMiniSearch").rows[idRow+1].cells[10].innerText;
+         var prev_returns = document.getElementById("dataTableMiniSearch").rows[idRow+1].cells[11].innerText;
+         var idModel = document.getElementById("dataTableMiniSearch").rows[idRow+1].cells[11].innerText;
+
+
+
+         if(units<=returns){
+             window.alert("You cant't return more items");
+             return;
+         }
+
+
+         returns=parseFloat(returns)+1;
+         document.getElementById("dataTableMiniSearch").rows[idRow+1].cells[10].innerText=returns;
+
+        $.ajax({
+                url: '@Url.Action("AddToPreReturn","Returns")',
+                type: 'GET',
+                data: {
+                    idBillLine:idBillLine,
+                 },
+                success: function (data) {
+                        UpdatePreReturn(data);
+                },
+                error: function () {
+                    console.log('error e json');
+                }
+               });
+
+    }
+
+        function search(ele) {
+
+        if(event.key === 'Enter') {
+             $("#dataTableMiniSearch tbody tr").remove();
+             $("#dataTableMiniPreReturn tbody tr").remove();
+            console.log(ele.value);
+            var billNumber=ele.value;
+            $.ajax({
+                url: '@Url.Action("GetBillByBillNumber","Returns")',
+                type: 'GET',
+                data: {
+                    billNumber:billNumber,
+                },
+                success: function (data) {
+                        //console.log(data);
+                        var tbodyRef = document.getElementById("dataTableMiniSearch").getElementsByTagName('tbody')[0];
+                        var lines=data.BillLines;
+                            $(lines).each(
+                        function (index, lineBill) {
+                           var newRow = tbodyRef.insertRow();
+                           var idRow=tbodyRef.rows.length-1;
+                            // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                            var cell1 = newRow.insertCell(0);
+                            var cell2 = newRow.insertCell(1);
+                            var cell3 = newRow.insertCell(2);
+                            var cell4 = newRow.insertCell(3);
+                            var cell5 = newRow.insertCell(4);
+                            var cell6 = newRow.insertCell(5);
+                            var cell7 = newRow.insertCell(6);
+                            var cell8 = newRow.insertCell(7);
+                            var cell9 = newRow.insertCell(8);
+                            var cell10 = newRow.insertCell(9);
+                            var cell11 = newRow.insertCell(10);
+                            var cell12 = newRow.insertCell(11);
+                            var cell13 = newRow.insertCell(12);
+
+
+                            cell1.style="display:none";
+                            cell12.style="display:none";
+                            cell13.style="display:none";
+
+                            // Add some text to the new cells:
+                             cell1.innerHTML = lineBill.Id;
+                            cell2.innerHTML = lineBill.Model.Item.ShortDescription;
+                             cell3.innerHTML =lineBill.Model.Item.LongDescription;
+                             cell4.innerHTML =lineBill.Model.Size.Description;
+                             cell5.innerHTML =lineBill.Model.Colour;
+                             cell6.innerHTML =lineBill.Model.Item.Discount;
+                             cell7.innerHTML =lineBill.Units;
+                             cell8.innerHTML =lineBill.UnitPrize;
+                             cell9.innerHTML =lineBill.Sum;
+                             cell10.innerHTML=" <a class=\"btn btn-warning btn-icon-split\" onclick=\"AddToPreReturn("+idRow+")\"><span class=\"icon text-white-50\"><i class=\"fa-solid fa-rotate-left\" ></i></span></a> ";
+                             cell11.innerHTML =lineBill.ReturnedUnits;
+                             cell12.innerHTML =lineBill.ReturnedUnits;
+                             cell13.innerHTML =lineBill.ModelId;
+
+                        });
+
+                        if(data.length==1){
+                            AddToPreBill(0);
+                        }
+
+
+                },
+                error: function () {
+                    console.log('error function search');
+                }
+               });
+        }
+    }
+
+
+
+
+</script>

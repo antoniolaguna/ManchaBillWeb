@@ -1,0 +1,315 @@
+﻿@model ManchaBillWeb.DTOs.ItemDTO
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+
+}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Create Item</h1>
+<hr />
+
+<div class="col-md-4">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="ShortDescription" class="control-label"></label>
+            <input asp-for="ShortDescription" class="form-control" />
+            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LongDescription" class="control-label"></label>
+            <input asp-for="LongDescription" class="form-control" />
+            <span asp-validation-for="LongDescription" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CostPrize" class="control-label"></label>
+            <input asp-for="CostPrize" class="form-control" />
+            <span asp-validation-for="CostPrize" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Prize" class="control-label"></label>
+            <input asp-for="Prize" id="prize" onfocusout="CalculateValue()" class="form-control" />
+            <span asp-validation-for="Prize" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="Tax" class="control-label">Tax %</label>
+            <input asp-for="Tax" onfocusout="CalculateValue()" class="form-control" id="tax" value="21" />
+            <span asp-validation-for="Tax" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Discount" class="control-label">Discount %</label>
+            <input asp-for="Discount" onfocusout="CalculateValue()" id="discount" class="form-control" value="0" />
+            <span asp-validation-for="Discount" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Value" class="control-label"></label>
+            <input asp-for="Value" id="valuePrize" readonly="readonly" class="form-control" />
+            <span asp-validation-for="Value" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="ItemTypeId" class="control-label"></label>
+            <select asp-for="ItemTypeId" class="form-control" asp-items="ViewBag.ItemTypeId" name="ItemTypeId" id="ItemTypeId">
+                <option value="">Select Type</option>
+            </select>
+            <span asp-validation-for="ItemTypeId" class="text-danger"></span>
+        </div>
+
+
+
+        <div class="form-group" id="modelsGroup" name="modelsGroup">
+            <label asp-for="Models" class="control-label"></label>
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTableMini" width="100%" cellspacing="0" style="background-color:white">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        Size
+                                    </th>
+                                    <th>
+                                        Colour
+                                    </th>
+                                    <th>
+                                        Store
+                                    </th>
+
+                                    <th>
+                                        Barcode
+                                    </th>
+                                    <th>
+                                        Delete
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#exampleModal">
+                            <span class="icon text-white-50">
+                                <i class="fa-solid fa-plus"></i>
+                            </span>
+                        </button>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <span asp-validation-for="Models" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SeasonId" class="control-label"></label>
+            <select asp-for="SeasonId" class="form-control" asp-items="ViewBag.SeasonId">
+                <option value="">Select Season</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="SupplierId" class="control-label"></label>
+            <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierId">
+                <option value="">Select Supplier</option>
+            </select>
+        </div>
+
+
+
+
+
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<form method="post" asp-action="AddTemp" asp-controller="Items">
+    <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Model</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Color:</label>
+                        <input name="color" id="color" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Store:</label>
+                        <input name="store" id="store" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>BARCODE:</label>
+                        <input name="barcode" id="barcode" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Size</label>
+                        <select class="form-control" asp-items="ViewBag.SizeId" name="size" id="size"></select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" onclick="addTmpModel()" class="btn btn-primary" data-dismiss="modal">Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index" class="btn btn-danger btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fa-solid fa-left-long"></i>
+        </span>
+        <span class="text">Back</span>
+    </a>
+</div>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        console.log('filtro inicial')
+        $("#modelsGroup").hide();
+    });
+
+
+    $("#ItemTypeId").change(function () {
+        console.log('cambio detectado')
+        if($('#ItemTypeId').val()>0){
+            console.log('vamos a mostrar el div')
+            $("#modelsGroup").show();
+             FilterSizes();
+        }else{
+            $("#modelsGroup").hide();
+            console.log('Ocultamos div')
+        }
+        ResetTableModels();
+
+    });
+
+    var ResetTableModels = function () {
+        console.log('Reset table')
+       $("#dataTableMini tbody tr").remove();
+
+
+    }
+
+     var CalculateValue = function () {
+       var value=0;
+       var prize=$('#prize').val();
+       var tax=$('#tax').val();
+       var discount=$('#discount').val();
+       if(!isNaN(prize) && !isNaN(tax) &&!isNaN(discount)){
+           console.log('entramos')
+           //precio base
+           value=prize;
+           //aplicamos iva
+           prize=parseFloat(prize)-parseFloat(prize*(tax/100));
+           //aplicamos descuento
+           prize=parseFloat(prize)+parseFloat(prize*(discount/100));
+           prize=prize.toFixed(2);
+           document.getElementById("valuePrize").value = prize;
+
+       }
+
+
+    }
+
+     var DeleteRow = function (idRow) {
+         $.ajax({
+            url: '@Url.Action("DeleteTmpModel","Items")',
+            type: 'GET',
+            data: {
+                idRow:idRow,
+            },
+            success: function (data) {
+                    console.log('Eliminar fila'+idRow);
+                    document.getElementById("dataTableMini").deleteRow(idRow+1)
+            },
+            error: function () {
+                console.log('error e json');
+            }
+           });
+    }
+
+    var FilterSizes = function () {
+         $.ajax({
+            url: '@Url.Action("FilterSizes","Items")',
+            type: 'GET',
+            data: {
+                itemTypeId:$('#ItemTypeId').val(),
+            },
+            success: function (data) {
+                $('#size').find('option').remove()
+                $(data).each(
+                    function (index, item) {
+                        $('#size').append('<option value="' + item.Id + '">' + item.Description + '</option>')
+                    });
+            },
+            error: function () {
+            }
+           });
+    }
+
+    var addTmpModel = function () {
+       console.log('add temp')
+        $.ajax({
+            url: '@Url.Action("AddTemporalModel","Items")',
+            type: 'GET',
+            data: {
+                color:$('#color').val(),
+                store:$('#store').val(),
+                size:$('#size').val(),
+                barcode:$('#barcode').val(),
+            },
+            success: function (data) {
+                   console.log(data);
+
+        // Find a <table> element with id="myTable":
+        var tbodyRef = document.getElementById("dataTableMini").getElementsByTagName('tbody')[0];
+        $(data).each(
+                    function (index, item) {
+                       var newRow = tbodyRef.insertRow();
+                       var idRow=tbodyRef.rows.length-1;
+                        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                        var cell1 = newRow.insertCell(0);
+                        var cell2 = newRow.insertCell(1);
+                        var cell3 = newRow.insertCell(2);
+                        var cell4 = newRow.insertCell(3);
+                        var cell5 = newRow.insertCell(4);
+
+                        // Add some text to the new cells:
+                        cell1.innerHTML = item.Size.Description;
+                         cell2.innerHTML =item.Colour;
+                         cell3.innerHTML =item.CountStore;
+                         cell4.innerHTML =item.Barcode;
+                         cell5.innerHTML=" <a class=\"btn btn-danger btn-icon-split\" onclick=\"DeleteRow("+idRow+")\"><span class=\"icon text-white-50\"><i class=\"fa-solid fa-trash\" ></i></span></a>";
+                    });
+                    document.getElementById("color").value = "";
+                    document.getElementById("store").value = "";
+                    document.getElementById("barcode").value = "";
+                    document.getElementById("size").selectedIndex="0";
+            },
+            error: function () {
+            }
+           });
+    }
+</script>

@@ -1,0 +1,123 @@
+﻿@model IEnumerable<ManchaBillWeb.DTOs.OutFlowDTO>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Outflows</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Date)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Amount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)€
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                               
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        <a class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#exampleModal">
+            <span class="icon text-white-50">
+                <i class="fa-solid fa-plus"></i>
+            </span>
+            <span class="text">New</span>
+        </a>
+
+    </p>
+
+</div>
+
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h5 class="modal-title">New Outflow</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Ammount:</label>
+                    <input name="Ammount"  id="Ammount" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <input name="Description"  id="Description" type="text" class="form-control" />
+                </div>
+              
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="CreateNewOutFlow()" >Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+     function CreateNewOutFlow() {
+       
+      
+        $.ajax({
+            url: '@Url.Action("CreateNewOutFlow","OutFlows")',
+            type: 'POST',
+            data: {
+                ammount:$('#Ammount').val(),
+                description:$('#Description').val()
+            },
+            success: function (data) {
+                   console.log(data);
+                   if(data==true){
+                       location.reload();
+                   }else{
+                       window.alert("Error creating new Outflow");
+                   }
+            },
+            error: function () {
+                console.log('error en json');
+            }
+           });
+    }
+</script>
+
+ 

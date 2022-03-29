@@ -1,0 +1,125 @@
+﻿@model IEnumerable<ManchaBillWeb.DTOs.ItemDTO>
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Items</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShortDescription)
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Season
+                            </th>
+                            <th>
+                                Supplier
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CostPrize)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Value)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Tax)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Discount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Prize)
+                            </th>
+                           
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ItemType.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Season.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Supplier.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CostPrize)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Value)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tax)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Discount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Prize)
+                                </td>
+                               
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fa-solid fa-info"></i>
+                                        </span>
+                                        <span class="text">Details</span>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </span>
+                                        <span class="text">Edit</span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </span>
+                                        <span class="text">Delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fa-solid fa-plus"></i>
+            </span>
+            <span class="text">New</span>
+        </a>
+
+    </p>
+
+</div>

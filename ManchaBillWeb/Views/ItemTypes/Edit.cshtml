@@ -1,0 +1,46 @@
+﻿@model ManchaBillWeb.DTOs.ItemTypeDTO
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Edit Item Type @Html.DisplayFor(model => model.Description)</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SizeTypeId" class="control-label"></label>
+                <select asp-for="SizeTypeId" class="form-control" asp-items="ViewBag.SizeTypeId"></select>
+                <span asp-validation-for="SizeTypeId" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Active" />
+            <input type="hidden" asp-for="DeleteDate" />
+            <input type="hidden" asp-for="CreatedDate" />
+            <input type="hidden" asp-for="UpdatedDate" />
+            <input type="hidden" asp-for="Comments" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-danger btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fa-solid fa-left-long"></i>
+        </span>
+        <span class="text">Back</span>
+    </a>
+</div>

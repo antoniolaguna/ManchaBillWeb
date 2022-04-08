@@ -1,0 +1,103 @@
+﻿@model ManchaBillWeb.DTOs.CashRegisterDTO
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Cash Closing</h1>
+
+<hr />
+
+<div class="col-md-4">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="OpeningDate" class="control-label"></label>
+            <input disabled value="@(ViewBag.OpeningDate ?? DateTime.Now.ToString())" class="form-control" />
+            <span asp-validation-for="OpeningDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ClosingDate" class="control-label"></label>
+            <input disabled value="@(ViewBag.ClosingDate ?? DateTime.Now.ToString())" class="form-control" />
+            <span asp-validation-for="ClosingDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastCloseRemander" class="control-label"></label>
+            <input asp-for="LastCloseRemander" disabled value="@(ViewBag.LastCloseRemander ?? String.Empty)" class="form-control" />
+            <span asp-validation-for="LastCloseRemander" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CashSales" class="control-label"></label>
+            <input disabled asp-for="CashSales" value="@(ViewBag.CashSales ?? String.Empty)" class="form-control" />
+            <span asp-validation-for="CashSales" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="Returns" class="control-label"></label>
+            <input disabled asp-for="Returns" value="@(ViewBag.Returns ?? String.Empty)" class="form-control" />
+            <span asp-validation-for="Returns" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="OutFlows" class="control-label"></label>
+            <input disabled asp-for="OutFlows" value="@(ViewBag.OutFlows ?? String.Empty)"  class="form-control" />
+            <span asp-validation-for="OutFlows" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Cash" class="control-label"></label>
+            <input disabled asp-for="Cash" value="@(ViewBag.Cash ?? String.Empty)" class="form-control" />
+            <span asp-validation-for="Cash" class="text-danger"></span>
+        </div>
+
+         <div class="form-group">
+            <label asp-for="RealCash" class="control-label"></label>
+            <input asp-for="RealCash" class="form-control" />
+            <span asp-validation-for="RealCash" class="text-danger"></span>
+        </div>
+
+         <div class="form-group">
+            <label asp-for="CashOut" class="control-label"></label>
+            <input asp-for="CashOut" class="form-control" />
+            <span asp-validation-for="CashOut" class="text-danger"></span>
+        </div>
+
+         <div class="form-group">
+            <label asp-for="Remander" class="control-label"></label>
+            <input disabled asp-for="Remander" class="form-control" />
+            <span asp-validation-for="Remander" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="Unbalance" class="control-label"></label>
+            <input disabled asp-for="Unbalance" class="form-control" />
+            <span asp-validation-for="Unbalance" class="text-danger"></span>
+        </div>
+
+         <div class="form-group">
+            <label asp-for="UnbalancePercentage" class="control-label"></label>
+            <input disabled asp-for="UnbalancePercentage" class="form-control" />
+            <span asp-validation-for="UnbalancePercentage" class="text-danger"></span>
+        </div>
+
+          <div class="form-group">
+            <label asp-for="Observations" class="control-label"></label>
+            <input asp-for="Observations" class="form-control" />
+            <span asp-validation-for="Observations" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-danger btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fa-solid fa-left-long"></i>
+        </span>
+        <span class="text">Back</span>
+    </a>
+</div>
+

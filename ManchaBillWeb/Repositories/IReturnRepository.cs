@@ -9,6 +9,7 @@ namespace ManchaBillWeb.Repositories
     public interface IReturnRepository : IGenericRepository<Return>
     {
         Task<List<Return>> GetAllReturnsActives();
+        Task<List<Return>> GetAllReturnsActives(DateTime fromDate);
         Task LogicDelete(int id);
         Return GetByIdWithAllRelationships(int id);
     }

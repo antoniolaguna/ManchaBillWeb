@@ -4,6 +4,7 @@ using ManchaBillWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManchaBillWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220330174014_M2ig")]
+    partial class M2ig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,76 +217,6 @@ namespace ManchaBillWeb.Data.Migrations
                     b.HasIndex("ModelId");
 
                     b.ToTable("BillLines");
-                });
-
-            modelBuilder.Entity("ManchaBillWeb.Models.CashRegister", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("Cash")
-                        .HasColumnType("float");
-
-                    b.Property<double>("CashOut")
-                        .HasColumnType("float");
-
-                    b.Property<double>("CashSales")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("Close")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("ClosingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("LastCloseRemander")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Observations")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OpeningDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("OutFlows")
-                        .HasColumnType("float");
-
-                    b.Property<double>("RealCash")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Remander")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Returns")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Unbalance")
-                        .HasColumnType("float");
-
-                    b.Property<double>("UnbalancePercentage")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CashRegisters");
                 });
 
             modelBuilder.Entity("ManchaBillWeb.Models.Item", b =>

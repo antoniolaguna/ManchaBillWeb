@@ -10,6 +10,7 @@ namespace ManchaBillWeb.Services
     public interface IBillService : IGenericService<Bill>
     {
         Task<List<Bill>> GetAllBillsActives();
+        Task<List<Bill>> GetAllBillsActives(DateTime fromDate);
         Task LogicDelete(int id);
         Bill GetByIdWithAllRelationships(int id);
         Bill GetBillByBillNumber(string numberBill);

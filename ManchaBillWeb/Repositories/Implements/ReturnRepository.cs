@@ -31,6 +31,20 @@ namespace ManchaBillWeb.Repositories.Implements
             return result;
         }
 
+        public Task<List<Return>> GetAllReturnsActives(DateTime fromDate)
+        {
+            var result = this.context.Returns.Where(r => r.Active &&r.Date>fromDate)
+                .Include(r => r.ReturnLines)
+                .ThenInclude(line => line.Model)
+                .ThenInclude(model => model.Size)
+                .Include(r => r.ReturnLines)
+                .ThenInclude(line => line.Model)
+                .ThenInclude(model => model.Item)
+                .ToListAsync();
+
+            return result;
+        }
+
         public Task LogicDelete(int id)
         {
             Return returnToLogicDelete = context.Returns.Find(id);

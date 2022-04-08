@@ -1,0 +1,120 @@
+﻿@model IEnumerable<ManchaBillWeb.DTOs.CashRegisterDTO>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Cash Registers</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpeningDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ClosingDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LastCloseRemander)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CashSales)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OutFlows)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RealCash)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CashOut)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Remander)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Unbalance)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UnbalancePercentage)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Observations)
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OpeningDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClosingDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastCloseRemander)€
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CashSales)€
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OutFlows)€
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RealCash)€
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CashOut)€
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Remander)€
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Unbalance)€
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnbalancePercentage)%
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Observations)
+                                </td>
+
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fa-solid fa-plus"></i>
+            </span>
+            <span class="text">New</span>
+        </a>
+
+    </p>
+
+</div>

@@ -21,6 +21,11 @@ namespace ManchaBillWeb.Services.Implements
             return this.billRepository.GetAllBillsActives();
         }
 
+        public Task<List<Bill>> GetAllBillsActives(DateTime fromDate)
+        {
+            return this.billRepository.GetAllBillsActives(fromDate);
+        }
+
         public Task LogicDelete(int id)
         {
             return this.billRepository.LogicDelete(id);

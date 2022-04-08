@@ -100,6 +100,7 @@ namespace ManchaBillWeb.Data
         public DbSet<Return> Returns { get; set; }
         public DbSet<ReturnLine> ReturnLines { get; set; }
         public DbSet<OutFlow> OutFlows { get; set; }
+        public DbSet<CashRegister> CashRegisters { get; set; }
 
 
     }

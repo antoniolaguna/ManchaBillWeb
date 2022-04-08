@@ -32,6 +32,21 @@ namespace ManchaBillWeb.Repositories.Implements
             return result;
         }
 
+        public Task<List<Bill>> GetAllBillsActives(DateTime fromDate)
+        {
+            var result = this.context.Bills.Where(bill => bill.Active && bill.Date>fromDate)
+                .Include(bill => bill.BillLines)
+                .ThenInclude(line => line.Model)
+                .ThenInclude(model => model.Size)
+                .Include(bill => bill.BillLines)
+                .ThenInclude(line => line.Model)
+                .ThenInclude(model => model.Item)
+                .Include(bill => bill.PaymentType)
+                .ToListAsync();
+
+            return result;
+        }
+
         public Task LogicDelete(int id)
         {
             Bill billToLogicDelete = context.Bills.Find(id);

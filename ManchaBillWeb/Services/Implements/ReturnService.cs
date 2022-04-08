@@ -20,6 +20,11 @@ namespace ManchaBillWeb.Services.Implements
         {
             return this.returnRepository.GetAllReturnsActives();
         }
+        public Task<List<Return>> GetAllReturnsActives(DateTime fromDate)
+        {
+            return this.returnRepository.GetAllReturnsActives(fromDate);
+        }
+
 
         public Task LogicDelete(int id)
         {

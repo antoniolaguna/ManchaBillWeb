@@ -6,31 +6,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ManchaBillWeb.Repositories.Implements
 {
-    public class OutFlowRepository : GenericRepository<OutFlow>, IOutFlowRepository
+    public class CashRegisterRepository : GenericRepository<CashRegister>, ICashRegisterRepository
     {
         private readonly ApplicationDbContext context;
-        public OutFlowRepository(ApplicationDbContext context) : base(context)
+        public CashRegisterRepository(ApplicationDbContext context) : base(context)
         {
             this.context = context;
         }
 
-        public Task<List<OutFlow>> GetAllOutFlowsActives()
+        public Task<List<CashRegister>> GetAllCashRegistersActives()
         {
-            var listOutFlow = context.OutFlows
+            var listCashRegister = context.CashRegisters
                 .Where(x => x.Active)
                 .ToListAsync();
-            return listOutFlow;
+            return listCashRegister;
         }
 
-        public Task<List<OutFlow>> GetAllOutFlowsActives(DateTime fromDate)
+       
+
+        public CashRegister GetLastCashRegister()
         {
-            var listOutFlow = context.OutFlows
-                .Where(x => x.Active && x.Date>fromDate)
-                .ToListAsync();
-            return listOutFlow;
+            var lastCashRegister = context.CashRegisters
+                .Where(x => x.Active)
+                .OrderByDescending(c => c.ClosingDate)
+                .FirstOrDefault();
+            return lastCashRegister;
         }
 
         public async Task LogicDelete(int id)
@@ -45,3 +47,4 @@ namespace ManchaBillWeb.Repositories.Implements
 
     }
 }
+

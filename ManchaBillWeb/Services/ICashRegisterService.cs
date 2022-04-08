@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ManchaBillWeb.Services
 {
-    public interface IOutFlowService : IGenericService<OutFlow>
+    public interface ICashRegisterService : IGenericService<CashRegister>
     {
-        Task<List<OutFlow>> GetAllOutFlowsActives();
-        Task<List<OutFlow>> GetAllOutFlowsActives(DateTime fromDate);
+        Task<List<CashRegister>> GetAllCashRegistersActives();
+        CashRegister GetLastCashRegister();
         Task LogicDelete(int id);
     }
 }

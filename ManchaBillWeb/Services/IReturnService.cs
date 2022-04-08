@@ -9,6 +9,7 @@ namespace ManchaBillWeb.Services
     public interface IReturnService : IGenericService<Return>
     {
         Task<List<Return>> GetAllReturnsActives();
+        Task<List<Return>> GetAllReturnsActives(DateTime fromDate);
         Task LogicDelete(int id);
         Return GetByIdWithAllRelationships(int id);
     }

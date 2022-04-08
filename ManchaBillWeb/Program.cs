@@ -30,6 +30,7 @@ builder.Services.AddScoped<IParameterRepository, ParameterRepository>();
 builder.Services.AddScoped<IReturnLineRepository, ReturnLineRepository>();
 builder.Services.AddScoped<IReturnRepository, ReturnRepository>();
 builder.Services.AddScoped<IOutFlowRepository, OutFlowRepository>();
+builder.Services.AddScoped<ICashRegisterRepository, CashRegisterRepository>();
 
 
 
@@ -48,6 +49,7 @@ builder.Services.AddTransient<IParameterService, ParameterService>();
 builder.Services.AddTransient<IReturnLineService, ReturnLineService>();
 builder.Services.AddTransient<IReturnService, ReturnService>();
 builder.Services.AddTransient<IOutFlowService, OutFlowService>();
+builder.Services.AddTransient<ICashRegisterService, CashRegisterService>();
 
 
 //AutoMapper

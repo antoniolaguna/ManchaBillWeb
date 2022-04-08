@@ -49,6 +49,9 @@ namespace ManchaBillWeb.DTOs
 
             CreateMap<OutFlow, OutFlowDTO>();
             CreateMap<OutFlowDTO, OutFlow>();
+
+            CreateMap<CashRegister, CashRegisterDTO>();
+            CreateMap<CashRegisterDTO, CashRegister>();
         }
 
       

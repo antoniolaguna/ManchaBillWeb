@@ -4,6 +4,7 @@ using ManchaBillWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManchaBillWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220330174633_ashudfhsduhfasdfs")]
+    partial class ashudfhsduhfasdfs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,9 +230,6 @@ namespace ManchaBillWeb.Data.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Cash")
-                        .HasColumnType("float");
-
                     b.Property<double>("CashOut")
                         .HasColumnType("float");
 
@@ -268,9 +267,6 @@ namespace ManchaBillWeb.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("Remander")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Returns")
                         .HasColumnType("float");
 
                     b.Property<double>("Unbalance")

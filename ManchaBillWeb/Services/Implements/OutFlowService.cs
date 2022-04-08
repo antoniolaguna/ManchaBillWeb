@@ -21,6 +21,11 @@ namespace ManchaBillWeb.Services.Implements
             return outFlowRepository.GetAllOutFlowsActives();
         }
 
+        public Task<List<OutFlow>> GetAllOutFlowsActives(DateTime fromDate)
+        {
+            return outFlowRepository.GetAllOutFlowsActives(fromDate);
+        }
+
         public Task LogicDelete(int id)
         {
             return outFlowRepository.LogicDelete(id);

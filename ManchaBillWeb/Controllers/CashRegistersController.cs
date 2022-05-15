@@ -53,26 +53,40 @@ namespace ManchaBillWeb.Controllers
             double cashReturnsAmmount = 0;
             double outFlowsAmmount = 0;
 
+            DateTime openDate = DateTime.MinValue;
+
             foreach(Bill b in cashSales)
             {
                 cashSalesAmmount += b.Prize;
+                if(b.Date> openDate)
+                {
+                    openDate=b.Date;
+                }
             }
 
             foreach (Return r in cashReturns)
             {
                 cashReturnsAmmount += r.Prize;
+                if (r.Date > openDate)
+                {
+                    openDate = r.Date;
+                }
             }
 
             foreach (OutFlow o in outFlows)
             {
                 outFlowsAmmount += o.Amount;
+                if (o.Date > openDate)
+                {
+                    openDate = o.Date;
+                }
             }
 
             double totalCash = lastCloseRem+cashSalesAmmount - cashReturnsAmmount - outFlowsAmmount;
 
             ViewData["LastCloseRemander"] = lastCloseRem;
             ViewData["ClosingDate"] = DateTime.Now.ToString();
-            ViewData["OpeningDate"] = DateTime.Now.ToString();
+            ViewData["OpeningDate"] = openDate;
             ViewData["CashSales"] = Decimal.Round(Convert.ToDecimal(cashSalesAmmount),2);
             ViewData["Returns"] = Decimal.Round(Convert.ToDecimal(cashReturnsAmmount), 2);
             ViewData["OutFlows"] = Decimal.Round(Convert.ToDecimal(outFlowsAmmount), 2);

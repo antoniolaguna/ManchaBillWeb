@@ -46,36 +46,36 @@
 
         <div class="form-group">
             <label asp-for="Cash" class="control-label"></label>
-            <input disabled asp-for="Cash" value="@(ViewBag.Cash ?? String.Empty)" class="form-control" />
+            <input disabled asp-for="Cash" id="Cash" value="@(ViewBag.Cash ?? String.Empty)" class="form-control" />
             <span asp-validation-for="Cash" class="text-danger"></span>
         </div>
 
          <div class="form-group">
             <label asp-for="RealCash" class="control-label"></label>
-            <input asp-for="RealCash" class="form-control" />
+            <input asp-for="RealCash" id="RealCash" value="0" onfocusout="CalculateRemander()"  class="form-control" />
             <span asp-validation-for="RealCash" class="text-danger"></span>
         </div>
 
          <div class="form-group">
             <label asp-for="CashOut" class="control-label"></label>
-            <input asp-for="CashOut" class="form-control" />
+            <input asp-for="CashOut" id="CashOut" value="0" onfocusout="CalculateRemander()" class="form-control" />
             <span asp-validation-for="CashOut" class="text-danger"></span>
         </div>
 
          <div class="form-group">
             <label asp-for="Remander" class="control-label"></label>
-            <input disabled asp-for="Remander" class="form-control" />
+            <input disabled asp-for="Remander" id="Remander" class="form-control" />
             <span asp-validation-for="Remander" class="text-danger"></span>
         </div>
          <div class="form-group">
             <label asp-for="Unbalance" class="control-label"></label>
-            <input disabled asp-for="Unbalance" class="form-control" />
+            <input disabled asp-for="Unbalance" id="Unbalence" class="form-control" />
             <span asp-validation-for="Unbalance" class="text-danger"></span>
         </div>
 
          <div class="form-group">
             <label asp-for="UnbalancePercentage" class="control-label"></label>
-            <input disabled asp-for="UnbalancePercentage" class="form-control" />
+            <input disabled asp-for="UnbalancePercentage" id="UnbalancePercentage" class="form-control" />
             <span asp-validation-for="UnbalancePercentage" class="text-danger"></span>
         </div>
 
@@ -101,3 +101,38 @@
     </a>
 </div>
 
+<script type="text/javascript">
+    function CalculateRemander () {
+        console.log('prueba');
+       var value=0;
+       var cash=$('#Cash').val();
+       var realCash=$('#RealCash').val();
+       var cashOut=$('#CashOut').val();
+        console.log(cash);
+        console.log(realCash);
+        console.log(cashOut);
+
+       if(!isNaN(cash) && !isNaN(realCash) &&!isNaN(cashOut)){
+           console.log('entramos')
+           var remander= realCash-cashOut;
+           var unbalance=cash - realCash;
+           var unbalancePercent=(unbalance*100)/realCash;
+           document.getElementById("Remander").value = remander;
+           document.getElementById("Unbalance").value =unbalance;
+           document.getElementById("UnbalancePercentage").value =unbalance;
+
+           ////precio base
+           //value=prize;
+           ////aplicamos iva
+           //prize=parseFloat(prize)-parseFloat(prize*(tax/100));
+           ////aplicamos descuento
+           //prize=parseFloat(prize)+parseFloat(prize*(discount/100));
+           //prize=prize.toFixed(2);
+           //document.getElementById("valuePrize").value = prize;
+
+       }
+
+
+    }
+
+    </script>

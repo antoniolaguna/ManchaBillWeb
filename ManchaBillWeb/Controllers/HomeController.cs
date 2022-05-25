@@ -13,6 +13,7 @@ namespace ManchaBillWeb.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
